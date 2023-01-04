@@ -43,19 +43,22 @@
       const plane = new THREE.Mesh(geometry, material);
       // Add PLANE Mesh into scene
       plane.rotation.set(1.6, 0, 0);
-      scene.add(plane);
+      // scene.add( plane );
 
-      const cubeGeo = new THREE.BoxGeometry(1, 1);
+      const cubeGeo = new THREE.BoxGeometry(2, 2, 2);
       const cubeMat = new THREE.MeshBasicMaterial({ color: 'red' });
       const cubeMesh = new THREE.Mesh(cubeGeo, cubeMat);
+      cubeMesh.position.set(4, 0, 0);
+      // scene.add(cubeMesh)
 
-      scene.add(cubeMesh);
-
-      const cubeGeo2 = new THREE.BoxGeometry(1, 1);
+      const cubeGeo2 = new THREE.BoxGeometry(10, 5, 0.2);
       const cubeMat2 = new THREE.MeshBasicMaterial({ color: 'blue' });
       const cubeMesh2 = new THREE.Mesh(cubeGeo2, cubeMat2);
-      cubeMesh2.position.set(4, 0.5, 4);
-      scene.add(cubeMesh2);
+      cubeMesh2.position.set(-4, 0, 0);
+
+      const g1 = new THREE.Group();
+      g1.add(plane, cubeMesh, cubeMesh2);
+      scene.add(g1);
 
       // Renderer
       var renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -67,8 +70,9 @@
       element.appendChild(renderer.domElement);
 
       function animate() {
-        // .rotation.y += 0.01
-        // plane.rotation.x += 0.01
+        g1.rotation.y += 0.01;
+        cubeMesh2.rotation.x += 0.01;
+        plane.rotation.x += 0.01;
         requestAnimationFrame(animate); // this method calls `animate` frame again & again
         renderer.render(scene, camera);
       }
